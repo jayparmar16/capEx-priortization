@@ -13,13 +13,14 @@ class PropertyState(TypedDict):
     scored_portfolio: pd.DataFrame
     logs: List[str]
 
+import re
+
 # Initialize the Nvidia NIM LLM
 llm = ChatNVIDIA(
     model="z-ai/glm4.7",
     api_key="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",
     temperature=0.1, # Low temp for more consistent scoring
     top_p=1,
-    max_tokens=1024,
 )
 
 def batch_process_with_llm(prompt: str, data: list) -> list:
@@ -28,13 +29,17 @@ def batch_process_with_llm(prompt: str, data: list) -> list:
 
     try:
         response = llm.invoke([{"role": "user", "content": full_prompt}])
-        # Try to parse the JSON output
         content = response.content.strip()
-        if content.startswith("```json"):
-            content = content[7:]
-        if content.endswith("```"):
-            content = content[:-3]
-        return json.loads(content)
+
+        # Robustly extract JSON array using regex
+        match = re.search(r'\[.*\]', content, re.DOTALL)
+        if match:
+            json_str = match.group(0)
+            return json.loads(json_str)
+        else:
+            print(f"LLM Error: Could not find JSON array in response:\n{content[:100]}...")
+            return []
+
     except Exception as e:
         print(f"LLM Error: {e}")
         # Fallback to deterministic if LLM fails formatting

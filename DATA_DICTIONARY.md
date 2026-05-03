@@ -6,7 +6,9 @@ This document explains the contents of the CSV files generated in the `data/` di
 
 The base geographic data is scraped from the **OpenStreetMap Overpass API**.
 * The script `src/fetch_properties.py` queries the Overpass API for nodes and ways tagged as `building=commercial`, `office`, or `retail` within the bounding boxes of Miami-Dade, Broward, and Polk counties.
-* **Important Note:** To ensure the pipeline works reliably without requiring API keys or encountering data privacy issues, the financial data (NOI, property value) and demographic data (income, minority percentage) are **synthetically generated** in `src/augment_data.py`. They are mathematically correlated to the geographic locations to simulate realistic Florida conditions (e.g., coastal properties have higher values, higher wind risk, and different demographics).
+* **Demographics (US Census API)**: Uses the FCC Area API to convert lat/lon to FIPS codes, then pulls real Median Household Income and exact Minority percentages via the US Census API.
+* **Flood Risk (FEMA NFHL API)**: Queries the FEMA ArcGIS REST API to find the real flood zone for the property.
+* **Important Note:** To ensure the pipeline works without requiring expensive commercial API keys or private Yardi/MRI access, the financial data (NOI, property value) and wind exposure are **synthetically generated** in `src/augment_data.py`. *However, the financial proxy is mathematically driven by the REAL Census income data to ensure a highly authentic distribution.*
 
 ---
 
@@ -36,11 +38,12 @@ This file takes the raw properties and adds synthetic demographic, risk, and fin
 | Column | Type | Description |
 | :--- | :--- | :--- |
 | *(All columns from raw_properties.csv)* | | |
-| `income_quartile` | Float | Simulated Census tract income quartile (1.0 = Lowest, 4.0 = Highest). Correlated with county location. |
-| `minority_pct` | Float | Simulated percentage of minority residents in the tract. Inversely correlated with the income quartile. |
-| `flood_zone` | String | Simulated FEMA flood zone proxy. `VE` (High Hazard Coastal), `AE` (Riverine/Coastal), or `X` (Minimal risk). |
+| `raw_income` | Float | REAL Median Household Income pulled from the US Census API. |
+| `income_quartile` | Float | Census tract income bucketed into quartiles (1.0 = Lowest, 4.0 = Highest) for the dashboard. |
+| `minority_pct` | Float | REAL percentage of minority residents in the tract, pulled from the US Census API. |
+| `flood_zone` | String | REAL FEMA flood zone (`VE`, `AE`, or `X`) pulled from the FEMA NFHL API. |
 | `wind_risk_mph` | Float | Simulated ASCE 7 wind exposure proxy (e.g., 120 mph inland vs 180 mph on the coast). |
-| `property_value` | Float | Simulated property value. Highly correlated with coastal counties and high-income quartiles. |
+| `property_value` | Float | Simulated property value. Mathematically driven by the REAL `raw_income` and county location. |
 | `noi` | Float | Net Operating Income. Calculated as a simulated cap rate percentage of the property value. |
 | `insurance_premium` | Float | Annual insurance cost. Calculated as a percentage of property value, heavily penalized for being in a `VE` flood zone. |
 

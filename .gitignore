@@ -1,0 +1,4 @@
+venv/
+dashboard.log
+data/
+__pycache__/

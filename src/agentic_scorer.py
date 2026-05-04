@@ -16,10 +16,9 @@ class PropertyState(TypedDict):
 import re
 
 # Initialize the Nvidia NIM LLM
-# The user specified 'z-ai/glm4.7' but the Nvidia API returns an empty response for it.
-# We will use 'meta/llama-3.1-8b-instruct' which is a standard fallback on Nvidia NIM that correctly processes the prompt.
+# Utilizing moonshotai/kimi-k2-thinking as requested for superior agentic reasoning
 llm = ChatNVIDIA(
-    model="meta/llama-3.1-8b-instruct",
+    model="moonshotai/kimi-k2-thinking",
     api_key="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",
     temperature=0.1, # Low temp for more consistent scoring
     top_p=1,
@@ -30,8 +29,23 @@ def batch_process_with_llm(prompt: str, data: list) -> list:
     full_prompt = f"{prompt}\n\nHere is the data in JSON format:\n{json.dumps(data)}\n\nProvide your response ONLY as a valid JSON array of objects matching the input order, with the newly computed scores."
 
     try:
-        response = llm.invoke([{"role": "user", "content": full_prompt}])
-        content = response.content.strip()
+        # For Nvidia NIM reasoning models (like kimi-k2-thinking), we bypass the LangChain wrapper
+        # to properly extract the response which is often nested differently or dropped in `invoke`.
+        import requests
+        url = "https://integrate.api.nvidia.com/v1/chat/completions"
+        headers = {
+            "Authorization": f"Bearer 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",
+            "Content-Type": "application/json"
+        }
+        payload = {
+            "model": "moonshotai/kimi-k2-thinking",
+            "messages": [{"role": "user", "content": full_prompt}],
+            "temperature": 0.1,
+            "top_p": 1,
+            "stream": False
+        }
+        api_resp = requests.post(url, headers=headers, json=payload).json()
+        content = api_resp.get("choices", [{}])[0].get("message", {}).get("content", "").strip()
 
         # Robustly extract JSON array using non-greedy regex
         match = re.search(r'\[.*?\]', content, re.DOTALL)

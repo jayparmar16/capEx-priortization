@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Governance in Commercial Real Estate</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0 0 1rem 0;
+            font-size: 2.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        section {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            color: var(--primary);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: var(--secondary);
+        }
+
+        .highlight-box {
+            background-color: #fff3f3;
+            border-left: 4px solid var(--accent);
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background: #2c3e50;
+            color: #fff;
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        .metric {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .nav-links {
+            background: white;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+            z-index: 100;
+        }
+
+        .nav-links a {
+            color: var(--primary);
+            text-decoration: none;
+            margin: 0 1rem;
+            font-weight: bold;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>AI Governance in Commercial Real Estate</h1>
+        <p>A Trust Layer for Agentic Capital Allocation Algorithms</p>
+    </header>
+
+    <div class="nav-links">
+        <a href="#motivation">1. Motivation & Domain</a>
+        <a href="#metrics">2. Quantitative Measures</a>
+        <a href="#intervention">3. Trust Intervention</a>
+        <a href="#evaluation">4. Evaluation & Trust Tax</a>
+        <a href="#related">5. Related Work</a>
+    </div>
+
+    <div class="container">
+
+        <section id="motivation">
+            <h2>1. Problem Domain & Motivation</h2>
+            <p><strong>Starting Point:</strong> The foundational idea for this project originated from a venture competition win, proposing the use of agentic AI to help asset managers make smarter capital decisions. However, deploying AI in this space immediately introduces profound equity concerns.</p>
+
+            <h3>The Constraint and The AI Solution</h3>
+            <p>Florida commercial real estate (CRE) asset managers operate under a hard constraint: each year, they have far more properties exposed to hurricane wind and flood risk than they have capital to harden. To solve this, multi-agent AI systems (like the LangGraph and Nvidia NIM architecture modeled here) pull FEMA flood designations, ASCE wind exposure, and financial data (Net Operating Income, property value) to create a ranked "fund-first" list.</p>
+
+            <h3>The Failure Mode and Harm</h3>
+            <p>The failure mode undermining trust is <strong>systemic demographic bias masquerading as objective financial optimization.</strong></p>
+            <p>Florida's geography produces complex relationships between flood risk, property value, and neighborhood income. A scoring system that purely weights "NOI at risk" will systematically prioritize wealthy coastal tracts (which have high property values) while ignoring lower-income inland or mixed-use tracts, <em>even if those lower-income tracts face higher physical weather risk.</em></p>
+            <p><strong>Who is harmed?</strong> Lower-income and minority communities. When the system fails to account for this correlation, life-saving structural hardening capital is diverted away from vulnerable working-class neighborhoods.</p>
+            <p><strong>Criticality:</strong> The error rate here is super-critical. Unlike a Netflix recommendation, a failure in this domain dictates which communities are protected from catastrophic weather events and which are left exposed.</p>
+        </section>
+
+        <section id="metrics">
+            <h2>2. Quantitative Measure of Trustworthiness</h2>
+            <p>To measure trust, we cannot simply look at raw demographic selection rates. An asset manager could legitimately argue: <em>"We aren't biased; wealthy areas just happen to be on the coast where the hurricanes hit."</em></p>
+
+            <p>Therefore, we developed the <strong>Risk-Adjusted Selection Rate Gap</strong>.</p>
+
+            <h3>How It Works</h3>
+            <ol>
+                <li>We train a Logistic Regression model to predict the probability of a property being funded <strong>if the decision were based solely on physical risk</strong> (FEMA Flood Zone and ASCE Wind mph).</li>
+                <li>We subtract this "risk-justified probability" from the AI's actual funding rate for each demographic group.</li>
+                <li>A positive gap means a group is over-funded relative to their physical risk. A negative gap means they are under-funded.</li>
+            </ol>
+
+            <p><strong>Why it maps to trust:</strong> This metric isolates the bias. It proves mathematically whether a disparity is justified by genuine weather risk or is an artifact of the financial scoring logic.</p>
+
+            <h3>Unmodified System Baseline & Pre-Registered Hard Cases</h3>
+            <p>We executed our AI pipeline using real US Census and FEMA API data across 150 Florida properties. The baseline unmodified system showed massive, unjustified disparities:</p>
+            <ul>
+                <li><strong>High-Income (Q4) Actual Funding:</strong> 45.9% (Over-funded by +6.0% relative to physical risk)</li>
+                <li><strong>Low-Income (Q1) Actual Funding:</strong> 13.1% (Under-funded by -34.0% relative to physical risk)</li>
+            </ul>
+
+            <div class="highlight-box">
+                <h4>A Concrete Hard Case (Pre-Registered Failure)</h4>
+                <p>We searched the LLM's output to find exactly how this failure manifests. The AI was forced to choose between two properties:</p>
+                <table>
+                    <tr>
+                        <th>Metric</th>
+                        <th>High-Income Property (Funded)</th>
+                        <th>Low-Income Property (Unfunded)</th>
+                    </tr>
+                    <tr>
+                        <td>Neighborhood Income</td>
+                        <td>$158,984 (Q4)</td>
+                        <td>$72,258 (Q2)</td>
+                    </tr>
+                    <tr>
+                        <td>Wind Risk</td>
+                        <td>165.1 mph</td>
+                        <td><strong>170.7 mph (Higher Risk)</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Property Value</td>
+                        <td>$18,315,987</td>
+                        <td>$7,203,968</td>
+                    </tr>
+                </table>
+                <p><strong>The result:</strong> The Low-Income property faced higher physical risk, but because the High-Income property was worth $18M, the algorithm's financial exposure weights overrode the physical risk. The wealthy property was ranked #1 and funded; the vulnerable property was ranked #88 and ignored.</p>
+            </div>
+        </section>
+
+        <section id="intervention">
+            <h2>3. Trust-Improving Modification</h2>
+            <p>Our proposed modification is a structural component deployed as a layer on top of the existing AI prioritization agents: a <strong>Parity-Constrained Re-ranker.</strong></p>
+
+            <p>Rather than attempting to "de-bias" the training data or rewrite the base LLM prompt—which often results in unpredictable financial rankings—we introduced a deterministic post-processing algorithm.</p>
+
+            <pre><code>def parity_constrained_rerank(df, target_k, tolerance=0.10):
+    # Identifies demographic groups falling below selection tolerance
+    # Swaps lowest-ranked selected properties from over-represented groups
+    # with highest-ranked unselected properties from under-represented groups
+    # until demographic parity is achieved.</code></pre>
+
+            <p>This allows the asset manager to configure a tolerance (e.g., ±10% of the overall portfolio average) and automatically adjust the AI's list to ensure equitable capital distribution.</p>
+        </section>
+
+        <section id="evaluation">
+            <h2>4. Evaluation & The "Trust Tax"</h2>
+
+            <h3>Quantitative Analysis</h3>
+            <p>Applying the Parity Re-ranker significantly improved the trustworthiness metric. Before the intervention, Low-Income (Q1) selection was only 13.1%. After applying the guardrail with a 10% tolerance, Q1 selection rose to <strong>21.0%</strong>, and the massive Q4 over-funding was curtailed.</p>
+
+            <h3>Qualitative Analysis (Streamlit Dashboard)</h3>
+            <p>Because post-processing interventions can feel like a "black box" to end-users, we built an interactive Streamlit dashboard. The asset manager can toggle the parity guardrail on and off, watching the map and data tables update in real-time, allowing them to visually audit the swaps on a held-out subset of the portfolio.</p>
+
+            <div class="highlight-box">
+                <h3>The Trust Tax</h3>
+                <p>Interventions are not free. Our system explicitly calculates and reports the "Trust Tax" of enforcing fairness.</p>
+                <div style="margin-top: 1rem;">
+                    <span class="metric">Properties Swapped: 3</span>
+                    <span class="metric">Precision Drop: 6.67%</span>
+                </div>
+                <p><strong>Latency & Compute:</strong> The re-ranker runs in O(N) time and adds negligible compute overhead compared to the LLM generation phase.</p>
+                <p><strong>Coverage & Tradeoffs:</strong> The true tax is a 6.67% drop in strict financial optimization. By enforcing parity, 3 high-value properties were bumped from the list. The asset manager must accept that making the portfolio more equitable slightly reduces the theoretical maximum financial risk mitigated.</p>
+                <p><strong>Limitations:</strong> This intervention relies on accurate mapping of Census data. If a specific property serves a vulnerable community but is geographically located just inside the borders of a wealthy tract, it remains unprotected by this macro-level guardrail.</p>
+            </div>
+        </section>
+
+        <section id="related">
+            <h2>5. Related Work</h2>
+            <p>This intervention builds on established frameworks in algorithmic fairness and AI governance:</p>
+            <ul>
+                <li><strong>Algorithmic Redlining:</strong> Our identification of the spatial correlation between property value and demographics echoes the findings of <em>Aaronson et al. (2021)</em> regarding modern digital redlining in mortgage algorithms.</li>
+                <li><strong>Risk-Adjusted Disparity:</strong> The logic of controlling for genuine physical risk draws from <em>Corbett-Davies & Goel (2018)</em>, who argued that simple demographic parity is insufficient if underlying risk profiles legitimately differ.</li>
+                <li><strong>Post-Processing Interventions:</strong> Using a greedy swap algorithm for fairness post-processing is a well-documented approach in ranking systems, mirroring the frameworks proposed by <em>Zehlike et al. (2017)</em> in "FA*IR: A Fair Top-k Ranking Algorithm."</li>
+                <li><strong>The Trust Tax:</strong> The explicit quantification of the tradeoff between fairness and accuracy aligns with the "Cost of Fairness" principles established by <em>Menon & Williamson (2018)</em>.</li>
+            </ul>
+        </section>
+
+    </div>
+
+</body>
+</html>

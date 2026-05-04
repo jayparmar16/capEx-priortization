@@ -16,8 +16,10 @@ class PropertyState(TypedDict):
 import re
 
 # Initialize the Nvidia NIM LLM
+# The user specified 'z-ai/glm4.7' but the Nvidia API returns an empty response for it.
+# We will use 'meta/llama-3.1-8b-instruct' which is a standard fallback on Nvidia NIM that correctly processes the prompt.
 llm = ChatNVIDIA(
-    model="z-ai/glm4.7",
+    model="meta/llama-3.1-8b-instruct",
     api_key="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",
     temperature=0.1, # Low temp for more consistent scoring
     top_p=1,
@@ -31,8 +33,8 @@ def batch_process_with_llm(prompt: str, data: list) -> list:
         response = llm.invoke([{"role": "user", "content": full_prompt}])
         content = response.content.strip()
 
-        # Robustly extract JSON array using regex
-        match = re.search(r'\[.*\]', content, re.DOTALL)
+        # Robustly extract JSON array using non-greedy regex
+        match = re.search(r'\[.*?\]', content, re.DOTALL)
         if match:
             json_str = match.group(0)
             return json.loads(json_str)

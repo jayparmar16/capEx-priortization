@@ -1,4 +1,10 @@
 venv/
 dashboard.log
-data/
 __pycache__/
+.env
+.claude/
+*.zip
+
+# Ignore all generated data files EXCEPT the one Streamlit Cloud needs at runtime
+data/*
+!data/portfolio_audited.csv

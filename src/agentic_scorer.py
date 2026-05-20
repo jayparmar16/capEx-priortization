@@ -1,12 +1,22 @@
+import os
 import pandas as pd
 from typing import TypedDict, List, Dict
 from langgraph.graph import StateGraph, END
 import math
 import json
 import time
+from dotenv import load_dotenv
 from langchain_nvidia_ai_endpoints import ChatNVIDIA
 
 # We will implement the multi-agent system using LangGraph and Nvidia NIM.
+
+load_dotenv()
+NVIDIA_NIM_API_KEY = os.environ.get("NVIDIA_NIM_API_KEY")
+if not NVIDIA_NIM_API_KEY:
+    raise RuntimeError(
+        "NVIDIA_NIM_API_KEY is not set. Copy .env.example to .env and fill in your key, "
+        "or export NVIDIA_NIM_API_KEY in your shell."
+    )
 
 class PropertyState(TypedDict):
     portfolio: pd.DataFrame
@@ -19,7 +29,7 @@ import re
 # Utilizing moonshotai/kimi-k2-thinking as requested for superior agentic reasoning
 llm = ChatNVIDIA(
     model="moonshotai/kimi-k2-thinking",
-    api_key="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",
+    api_key=NVIDIA_NIM_API_KEY,
     temperature=0.1, # Low temp for more consistent scoring
     top_p=1,
 )
@@ -34,7 +44,7 @@ def batch_process_with_llm(prompt: str, data: list) -> list:
         import requests
         url = "https://integrate.api.nvidia.com/v1/chat/completions"
         headers = {
-            "Authorization": f"Bearer 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",
+            "Authorization": f"Bearer {NVIDIA_NIM_API_KEY}",
             "Content-Type": "application/json"
         }
         payload = {

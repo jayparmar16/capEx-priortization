@@ -1,0 +1,6 @@
+#,What we predicted,What happened
+1,"A high-value building in a low-flood zone would beat a low-value building in the same flood zone with similar wind exposure.","Confirmed. Found in the Miami-Dade slice."
+2,"A building in a working-class tract with higher wind risk than a building in a wealthy tract would still be ranked below it.","Confirmed. A 170 mph building landed at rank 88. A 165 mph building landed at rank 1."
+3,"Inland Polk County would be systematically under-funded versus the coastal counties.","Confirmed in aggregate."
+4,"A moderate-flood-zone building in a low-income tract would beat a low-flood-zone building in a high-income tract.","Mixed. Sometimes, but financial exposure usually still won."
+5,"The income gap would be sharper than the racial gap, because Florida geography links income and coast more tightly than race and coast.",Confirmed.

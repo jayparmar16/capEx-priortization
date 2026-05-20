@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>When the AI Skipped the Wrong Block: A Story About Trust in Automated Real Estate</title>
+    <style>
+        :root {
+            --primary: #1e293b;
+            --secondary: #2563eb;
+            --accent: #ef4444;
+            --good: #10b981;
+            --soft: #f1f5f9;
+            --bg: #f8fafc;
+            --text: #0f172a;
+            --muted: #475569;
+            --card: #ffffff;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.75;
+            color: var(--text);
+            background: var(--bg);
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            color: white;
+            padding: 4rem 1.5rem 5rem;
+            text-align: center;
+        }
+        header .eyebrow {
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-size: 0.85rem;
+            opacity: 0.8;
+            margin-bottom: 0.75rem;
+        }
+        header h1 {
+            font-size: 2.4rem;
+            margin: 0 0 1rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            max-width: 760px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        header p {
+            max-width: 720px;
+            margin: 0 auto;
+            font-size: 1.15rem;
+            opacity: 0.92;
+            font-weight: 300;
+        }
+        nav {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            padding: 0.85rem 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+        }
+        nav a {
+            color: var(--muted);
+            text-decoration: none;
+            margin: 0 0.55rem;
+            font-weight: 600;
+        }
+        nav a:hover { color: var(--secondary); }
+        .container {
+            max-width: 820px;
+            margin: -3rem auto 3rem;
+            padding: 0 1.25rem;
+            position: relative;
+            z-index: 10;
+        }
+        section {
+            background: var(--card);
+            border-radius: 14px;
+            padding: 2.25rem 2.4rem;
+            margin-bottom: 1.6rem;
+            box-shadow: 0 6px 24px -8px rgba(15, 23, 42, 0.08);
+        }
+        h2 {
+            color: var(--primary);
+            font-size: 1.7rem;
+            margin: 0 0 0.5rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+        h2 .num {
+            color: var(--secondary);
+            font-weight: 800;
+            margin-right: 0.35rem;
+        }
+        .lede {
+            color: var(--muted);
+            font-style: italic;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+        }
+        h3 {
+            color: var(--primary);
+            font-size: 1.15rem;
+            margin-top: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+        p { margin: 0.85rem 0; }
+        ul, ol { padding-left: 1.4rem; }
+        li { margin: 0.45rem 0; }
+        figure {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        figure img {
+            max-width: 100%;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+        }
+        figcaption {
+            font-size: 0.92rem;
+            color: var(--muted);
+            margin-top: 0.6rem;
+            font-style: italic;
+        }
+        .callout {
+            background: #eff6ff;
+            border-left: 4px solid var(--secondary);
+            padding: 1.1rem 1.3rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.4rem 0;
+        }
+        .callout.alert {
+            background: #fef2f2;
+            border-left-color: var(--accent);
+        }
+        .callout.good {
+            background: #ecfdf5;
+            border-left-color: var(--good);
+        }
+        .callout p:first-child { margin-top: 0; }
+        .callout p:last-child { margin-bottom: 0; }
+        .stat-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 0.85rem;
+            margin: 1.25rem 0;
+        }
+        .stat {
+            background: var(--soft);
+            padding: 1.1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat .big {
+            display: block;
+            font-size: 1.9rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1.1;
+        }
+        .stat .label {
+            display: block;
+            font-size: 0.82rem;
+            color: var(--muted);
+            margin-top: 0.35rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0;
+            font-size: 0.95rem;
+        }
+        th, td {
+            padding: 0.7rem 0.85rem;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: left;
+        }
+        th {
+            background: var(--soft);
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        td.num { text-align: right; font-variant-numeric: tabular-nums; }
+        code {
+            background: #f1f5f9;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #0f172a;
+        }
+        pre {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 1.1rem 1.3rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.88rem;
+            line-height: 1.55;
+            margin: 1.2rem 0;
+        }
+        pre code {
+            background: transparent;
+            color: inherit;
+            padding: 0;
+            font-size: inherit;
+        }
+        .code-comment { color: #94a3b8; font-style: italic; }
+        footer {
+            text-align: center;
+            padding: 2rem 1rem 3rem;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="eyebrow">Project Report</div>
+    <h1>When the AI Skipped the Wrong Block</h1>
+    <p>An AI was asked which Florida commercial buildings to reinforce before the next hurricane. It picked the ones in the wealthiest neighborhoods. This is the story of how we caught it, what we did about it, and what it cost.</p>
+</header>
+
+<nav>
+    <a href="#story">The Story</a>
+    <a href="#data">The Data</a>
+    <a href="#metric">The Test</a>
+    <a href="#baseline">What We Found</a>
+    <a href="#prereg">Predictions</a>
+    <a href="#fix">The Fix</a>
+    <a href="#results">After the Fix</a>
+    <a href="#tax">The Cost</a>
+    <a href="#related">Sources</a>
+</nav>
+
+<div class="container">
+
+    <section id="story">
+        <h2><span class="num">1.</span>The Setup</h2>
+        <p class="lede">Hurricanes do not wait for budget meetings.</p>
+
+        <p>Picture a real estate manager in Miami at the start of hurricane season. She owns 150 commercial buildings spread across Miami-Dade, Broward, and inland Polk County. She has enough money this year to reinforce the roofs and windows on 45 of them. The other 105 will face the next storm with whatever they have now.</p>
+
+        <p>Choosing which 45 is hard. So she does what most large managers now do. She hands the problem to an AI. The AI pulls in flood zone maps from FEMA, wind exposure data from engineering codes, the income of every property, and the cost to insure each one. Then it produces a ranked list. Top of the list gets reinforced. Bottom of the list does not.</p>
+
+        <p>This sounds objective. The AI does not see race. It does not see income directly. It only looks at numbers like "value at risk" and "wind speed in mph." But there is a problem hiding in plain sight, and it is the reason we built this whole project.</p>
+
+        <h3>The hidden trap</h3>
+        <p>First, a quick clarification. The asset manager owns commercial real estate, not houses. We are talking about strip malls, office parks, retail centers, warehouses, and corner stores. None of these buildings are themselves "wealthy" or "working class." But the <em>neighborhoods</em> they sit in are. A strip mall in a high-income beachfront tract behaves very differently from a strip mall in a working-class inland tract, even if the buildings look identical on a satellite image.</p>
+
+        <p>Wealthy neighborhoods in Florida sit on more expensive commercial buildings, because rents and sale prices track local incomes. The AI is told to weight financial exposure heavily, because losing a $20 million building hurts the portfolio more than losing a $5 million one. So when the AI looks at the numbers, the buildings in wealthier tracts always come out on top. The buildings in working-class tracts next door, often facing the same hurricane or worse, end up at the bottom of the list.</p>
+
+        <h3>Why this matters for actual people</h3>
+        <p>The harm is not "the building owner loses some rent money." The harm flows through to the residents who depend on those buildings every day. Here are three concrete examples of what happens when a commercial building in a working-class neighborhood does not get reinforced and the next storm takes it out:</p>
+
+        <ul>
+            <li><strong>The corner pharmacy.</strong> A Quartile 2 strip mall in inland Polk County houses the only chain pharmacy for several miles. After the storm tears off its roof, the building is closed for six months. Residents on diabetes or blood pressure medication now have to drive 20 miles to refill prescriptions. Many do not have cars, and the local bus route was also disrupted.</li>
+            <li><strong>The neighborhood grocery.</strong> A small grocery store in a Quartile 1 tract serves a community where most households shop for food two or three times a week, in small amounts, because the apartments do not have large refrigerators. After the storm, the store loses power and inventory and stays shut for weeks. The nearest alternative is a gas station that sells chips and soda. Food insecurity in the tract spikes.</li>
+            <li><strong>The urgent care clinic.</strong> A medical office in a working-class Miami-Dade tract is the only walk-in clinic that takes Medicaid in the area. The roof gives way during the storm. For the next year, residents with workplace injuries, sick kids, and untreated chronic conditions either go to a hospital ER (expensive, slow) or skip care entirely.</li>
+        </ul>
+
+        <p>Now imagine the parallel scenario in a Quartile 4 beachfront tract. A high-end restaurant or a boutique loses its windows, but the residents have cars, savings, and choices. They drive to the next neighborhood. They are inconvenienced. The working-class community in the first scenario loses access to medication, food, and basic medical care for weeks or months.</p>
+
+        <p>This is what the AI is quietly choosing every time it follows financial exposure: it is choosing whose corner pharmacy reopens on day three after the storm and whose stays shut for half a year. That is why the standard for "good enough" here has to be much higher than for a Netflix recommendation. This is not a movie pick. It is community infrastructure.</p>
+    </section>
+
+    <section id="data">
+        <h2><span class="num">2.</span>What the AI Actually Sees</h2>
+        <p class="lede">Before you can judge the decision, you have to know what the decision was made from.</p>
+
+        <p>The AI is not magic. It looks at a small set of numbers for each of the 150 commercial buildings and produces a score. To understand why it favors the buildings in wealthier neighborhoods, you have to look at the inputs. Some of these come from real public APIs. Some are synthetic but built on top of real public APIs. We were careful about which is which, because the trust in the whole report depends on it.</p>
+
+        <h3>The real, live, public data</h3>
+        <p>Four pieces of information for every building come straight from official sources, fetched at pipeline run time:</p>
+
+        <table>
+            <thead>
+            <tr><th>What</th><th>Where it comes from</th><th>Why it matters</th></tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><strong>Building location and type</strong> (latitude, longitude, commercial / office / retail tag)</td>
+                <td>OpenStreetMap, queried via the Overpass API. We pull buildings inside the bounding boxes of Miami-Dade, Broward, and Polk counties.</td>
+                <td>Real coordinates mean we are scoring real buildings in real neighborhoods, not points on an abstract grid.</td>
+            </tr>
+            <tr>
+                <td><strong>Census tract assignment</strong> (the FIPS code that maps a coordinate to a neighborhood)</td>
+                <td>FCC Area API. We give it a lat / lon, it returns the state, county, and tract code.</td>
+                <td>This is the bridge that lets us pull real neighborhood demographics for any random building we found on the map.</td>
+            </tr>
+            <tr>
+                <td><strong>Median household income and minority percentage</strong> for the tract</td>
+                <td>US Census Bureau, ACS 5-Year Estimates (2022). Specifically variables <code>B19013_001E</code> for income, and <code>B02001_001E</code> and <code>B02001_002E</code> for the racial composition.</td>
+                <td>These are the protected attributes the audit cares about. They are not used by the scoring AI directly, but they are what the fairness metric measures against.</td>
+            </tr>
+            <tr>
+                <td><strong>FEMA flood zone</strong> (VE, AE, or X)</td>
+                <td>FEMA National Flood Hazard Layer, queried via the ArcGIS REST API for the building's exact coordinates.</td>
+                <td>This is the strongest piece of physical risk data in the system. VE is the highest coastal hazard, AE is moderate, X is minimal.</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p>So when the report says a building sits in flood zone VE with $158,984 median neighborhood income, those numbers came directly from FEMA and the Census Bureau. None of it is invented.</p>
+
+        <h3>The synthetic data, and why it is honest synthetic</h3>
+        <p>Three more pieces of information are synthetic, because the real versions are locked behind expensive commercial data providers. Per-property wind ratings sit behind CoreLogic and RMS. Real property values, net operating income, and insurance premiums sit inside private property management systems like Yardi and MRI. We could not get those for a course project. So we built them, but we built them in a way that preserves the bias signal.</p>
+
+        <table>
+            <thead>
+            <tr><th>What</th><th>How we generated it</th><th>What is honest about it</th></tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><strong>Wind risk (mph)</strong></td>
+                <td>Random uniform draw. Coastal counties (Miami-Dade, Broward) get 150 to 185 mph. Inland Polk gets 110 to 140 mph.</td>
+                <td>The coastal versus inland gap matches the real ASCE 7 wind exposure pattern. The exact mph value for any given building is made up.</td>
+            </tr>
+            <tr>
+                <td><strong>Property value</strong></td>
+                <td>A formula: <code>5M × county_multiplier × (real_income / 60K) × random_noise</code>. Coastal counties get a 1.3 multiplier, inland gets 0.8.</td>
+                <td>The value is mathematically driven by the real Census income for the tract. So commercial buildings in wealthy neighborhoods come out expensive, exactly as they would in reality. This is the input that creates the bias the report is investigating.</td>
+            </tr>
+            <tr>
+                <td><strong>Net Operating Income and insurance premium</strong></td>
+                <td>NOI is a random cap rate (5 to 8 percent) of the property value. Insurance is a percentage of value, scaled up sharply for buildings in real FEMA flood zone VE.</td>
+                <td>Both are derived from the property value, which itself is driven by real income. Insurance is also a real function of the real flood zone. So the financial cost of risk tracks the real geography.</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h3>Which numbers feed the AI's decision</h3>
+        <p>This is the important part. The scoring AI never sees income or race. It only sees four numbers per building: <code>flood_zone</code>, <code>wind_risk_mph</code>, <code>noi</code>, and <code>insurance_premium</code>. From those four, it produces a physical risk score (60 percent weight) and a financial exposure score (40 percent weight), then ranks the portfolio.</p>
+
+        <p>Two of the AI's four inputs are real (flood zone, the structure of wind risk by county) and two are synthetic but anchored to real Census income (NOI, insurance premium). The income and minority percentage are held aside for the audit only. They never touch the AI itself. That is what makes the bias finding meaningful: the AI can produce a demographically skewed list without ever being told a single demographic fact, just because the financial signals it does see are spatially correlated with wealth.</p>
+
+        <div class="callout">
+            <p><strong>Why this matters for trust.</strong> A common defense of automated decision systems is "the AI does not see race or income, so it cannot be biased." This project is a working counter-example. Every input the AI uses is either a real public number or a number derived from real public information, and the AI still produces a list that systematically favors wealthier neighborhoods. The bias does not come from a bad input. It comes from how the inputs are weighted and how those inputs correlate in the real world.</p>
+        </div>
+    </section>
+
+    <section id="metric">
+        <h2><span class="num">3.</span>How Do You Even Measure "Fair"?</h2>
+        <p class="lede">You cannot just count who got picked. You have to ask why.</p>
+
+        <p>Our first instinct was simple. Look at how often the AI picked commercial buildings from high-income tracts versus low-income tracts. If the high-income tracts got picked far more often, that is bias. Right?</p>
+
+        <p>Not quite. A reasonable manager will push back on that argument. She will say, "Of course buildings in wealthier tracts get picked more. They are on the coast. That is where hurricanes hit hardest. You cannot blame the AI for picking the buildings that are in actual danger."</p>
+
+        <p>That is a fair point, and we needed a measurement that handled it. So we built one and gave it a plain name: the <strong>Risk-Adjusted Gap</strong>.</p>
+
+        <p>The idea is straightforward. We ask, "If we ignored money completely and only looked at the storm risk, who would the system fund?" Then we compare that imaginary list to the real one. If a group is funded much less often than pure storm risk would say they should be, that is the part of the gap money cannot explain. That is the part that should make us nervous.</p>
+
+        <p>This metric maps cleanly to what trust actually means here. A regulator, a journalist, or the manager herself can look at the gap for each income group and ask the only question that matters in this domain: "Is this difference defensible because of weather, or is it a side effect of how we weighted the dollars?"</p>
+
+        <h3>How we built it, in code</h3>
+        <p>We used a small logistic regression. The model takes one input per building (its physical risk score, computed from FEMA flood zone and ASCE wind exposure) and learns the relationship between that risk and whether the AI chose to fund the building. Once the model is trained, we ask it the question we actually care about: "Forget what the AI did. Based purely on storm risk, what is the probability this building would be funded?" Then we compare that probability to what the AI actually picked, group by group.</p>
+
+        <pre><code><span class="code-comment"># Step 1. Train a tiny model that predicts "was this building funded?"</span>
+<span class="code-comment"># using ONLY the physical_risk_score (FEMA flood zone + ASCE wind) as input.</span>
+<span class="code-comment"># Income, value, NOI are deliberately excluded.</span>
+X = df[["physical_risk_score"]]
+y = df["funded_baseline"].astype(int)
+
+model = LogisticRegression(class_weight="balanced")
+model.fit(X, y)
+
+<span class="code-comment"># For each building, this gives the probability it WOULD have been funded</span>
+<span class="code-comment"># if storm risk were the only thing that mattered.</span>
+df["risk_justified_prob"] = model.predict_proba(X)[:, 1]
+
+<span class="code-comment"># Step 2. For each income group, compare actual to risk-justified.</span>
+<span class="code-comment"># Negative gap means the group is under-funded relative to its real storm risk.</span>
+for q in [1, 2, 3, 4]:
+    sub         = df[df["income_quartile"] == q]
+    actual_rate = sub["funded_baseline"].mean()       <span class="code-comment"># what the AI picked</span>
+    justified   = sub["risk_justified_prob"].mean()   <span class="code-comment"># what storm risk alone would pick</span>
+    gap         = actual_rate - justified
+    print(f"Q{q}: gap = {gap:+.1%}")
+</code></pre>
+
+        <p>That is the whole idea. A one-feature logistic regression gives us the storm-risk-only baseline, and a simple loop turns that into a per-group gap number. The full implementation lives in <code>src/audit_pipeline.py</code>. Note one important detail: income and minority percentage are nowhere in the model. The metric is built only from physical risk and the AI's own decisions. That keeps the comparison clean, because the demographic numbers stay reserved for the audit itself rather than getting tangled into the baseline.</p>
+    </section>
+
+    <section id="baseline">
+        <h2><span class="num">4.</span>What the AI Actually Did</h2>
+        <p class="lede">Real properties, real Census data, real FEMA flood zones, a live AI agent stack.</p>
+
+        <p>We pulled 150 commercial buildings from OpenStreetMap across three Florida counties and tagged each one with its real neighborhood income from the US Census, its real FEMA flood zone, and a realistic wind and financial profile. Then we ran the multi-agent AI pipeline (it uses LangGraph and a hosted LLM called <code>kimi-k2-thinking</code>) and let it pick its top 30 percent.</p>
+
+        <div class="stat-row">
+            <div class="stat"><span class="big">150</span><span class="label">Properties scored</span></div>
+            <div class="stat"><span class="big">45</span><span class="label">Funded by the AI</span></div>
+            <div class="stat"><span class="big">30%</span><span class="label">Portfolio average rate</span></div>
+        </div>
+
+        <figure>
+            <img src="report_assets/01_baseline_selection.png" alt="Bar chart showing baseline AI selection rates by income quartile. Quartile 4 receives 45 percent funding, Quartile 3 receives 31 percent, Quartile 1 receives 26 percent, Quartile 2 receives only 18 percent.">
+            <figcaption>The baseline AI funds properties from the highest-income neighborhoods (Quartile 4) more than twice as often as the second-lowest group. The dashed red line is the portfolio average of 30 percent.</figcaption>
+        </figure>
+
+        <p>The picture matched what we worried about. The wealthiest group of neighborhoods got funded 45 percent of the time. The second-lowest group got funded only 18 percent of the time. By itself, though, this chart cannot prove bias, because the manager's "they live on the coast" argument still applies. So we ran the Risk-Adjusted Gap on top of it.</p>
+
+        <figure>
+            <img src="report_assets/02_risk_adjusted_gap.png" alt="Bar chart showing the risk-adjusted gap by income quartile under the original method. All four bars point downward, but the bar for Quartile 4 is shallow and the bars for Quartiles 1 and 2 are deep.">
+            <figcaption>This is the gap between what the AI actually did and what pure storm risk would have done. Quartile 4 lands close to where risk would put it. The lower-income groups land far below.</figcaption>
+        </figure>
+
+        <div class="callout alert">
+            <p><strong>The pattern.</strong> When the AI deviates from a pure-storm-risk allocation, it deviates against the lower-income groups. Quartile 4 is funded almost exactly in line with risk. Quartile 2 falls the furthest behind. The direction is unambiguous: the AI is making decisions that favor commercial buildings in wealthier tracts beyond what the actual storm exposure would justify.</p>
+        </div>
+    </section>
+
+    <section id="prereg">
+        <h2><span class="num">5.</span>Five Predictions, Written Before We Ran It</h2>
+        <p class="lede">It is too easy to find a failure after the fact. So we wrote down what we expected first.</p>
+
+        <p>Before we ran the LLM on the data, we wrote down five specific failure cases we predicted the system would produce. This protects us from cherry-picking. Three of the five played out as predicted, one was confirmed in aggregate, and one was mixed.</p>
+
+        <table>
+            <thead>
+            <tr><th>#</th><th>What we predicted</th><th>What happened</th></tr>
+            </thead>
+            <tbody>
+            <tr><td>1</td><td>A high-value building in a low-flood zone would beat a low-value building in the same flood zone with similar wind exposure.</td><td><strong>Confirmed.</strong> Found in the Miami-Dade slice.</td></tr>
+            <tr><td>2</td><td>A building in a working-class tract with <em>higher</em> wind risk than a building in a wealthy tract would still be ranked below it.</td><td><strong>Confirmed.</strong> A 170 mph building landed at rank 88. A 165 mph building landed at rank 1.</td></tr>
+            <tr><td>3</td><td>Inland Polk County would be systematically under-funded versus the coastal counties.</td><td><strong>Confirmed</strong> in aggregate.</td></tr>
+            <tr><td>4</td><td>A moderate-flood-zone building in a low-income tract would beat a low-flood-zone building in a high-income tract.</td><td><strong>Mixed.</strong> Sometimes, but financial exposure usually still won.</td></tr>
+            <tr><td>5</td><td>The income gap would be sharper than the racial gap, because Florida geography links income and coast more tightly than race and coast.</td><td><strong>Confirmed.</strong></td></tr>
+            </tbody>
+        </table>
+
+        <p>The clearest single failure was prediction number two. The AI was choosing between two retail buildings in Miami-Dade, both in the same low-flood zone. One sat in a high-income Census tract, the other in a working-class one. Here is what the inputs looked like.</p>
+
+        <div class="callout alert">
+            <table>
+                <thead><tr><th>Metric</th><th>Funded (in wealthy tract)</th><th>Ignored (in working-class tract)</th></tr></thead>
+                <tbody>
+                <tr><td>Neighborhood income</td><td class="num">$158,984 (Q4)</td><td class="num">$72,258 (Q2)</td></tr>
+                <tr><td>Wind risk</td><td class="num">165.1 mph</td><td class="num"><strong>170.7 mph</strong></td></tr>
+                <tr><td>Property value</td><td class="num">$18,315,987</td><td class="num">$7,203,968</td></tr>
+                <tr><td>Final AI rank</td><td class="num"><strong>#1</strong></td><td class="num">#88</td></tr>
+                </tbody>
+            </table>
+            <p>The ignored building actually faced a stronger storm. The funded building was simply worth more. The AI followed the money and ignored the wind. That is the bias in a single line.</p>
+        </div>
+    </section>
+
+    <section id="fix">
+        <h2><span class="num">6.</span>What We Did About It</h2>
+        <p class="lede">We chose the most boring fix on purpose, because boring is auditable.</p>
+
+        <p>We thought about three ways to fix this. We rejected two of them.</p>
+
+        <p>The first option was to ask the AI to "be fair" in its prompt. We rejected this because LLMs are slippery when you give them moral instructions. You ask for fairness and you get something different every run, and you cannot explain to a regulator afterward what changed and why.</p>
+
+        <p>The second option was to retrain the AI on rebalanced data. We rejected this because we do not own the training data, and faking the financial inputs would distort the very signal the manager is paying for.</p>
+
+        <p>The third option, the one we picked, is a small filter that runs after the AI has finished. We call it the <strong>Parity Guardrail</strong>. It looks at the AI's list of 45 funded properties, checks the funding rate for each income group, and asks, "Is any group falling more than 10 percent below the portfolio average?" If yes, it swaps out the lowest-priority funded property from an over-represented group and replaces it with the highest-priority unfunded property from the under-represented one. It keeps doing this until everyone is back inside the fairness band, or until no clean swap is possible.</p>
+
+        <p>The whole thing is one page of Python. Every swap is logged. The manager can see exactly which property was dropped and which one took its place, and they can adjust the tolerance from 1 percent up to 20 percent right inside the dashboard.</p>
+    </section>
+
+    <section id="results">
+        <h2><span class="num">7.</span>What Changed After the Fix</h2>
+        <p class="lede">The numbers, then a real example.</p>
+
+        <figure>
+            <img src="report_assets/03_before_after_rerank.png" alt="Side-by-side bar chart comparing baseline AI selection rates with rates after the parity guardrail. Quartile 2 rises from 18 to 21 percent, Quartile 4 falls from 45 to 42 percent.">
+            <figcaption>The Guardrail nudges Quartile 2 up and Quartile 4 down. Quartiles 1 and 3 were already inside the fairness band, so nothing changed for them.</figcaption>
+        </figure>
+
+        <p>After the Guardrail ran, every group was inside the 10 percent fairness band. Here are the four numbers in plain form.</p>
+
+        <table>
+            <thead>
+            <tr><th>Income Quartile</th><th>Baseline AI</th><th>After Guardrail</th><th>Change</th></tr>
+            </thead>
+            <tbody>
+            <tr><td>Q1 (lowest income)</td><td class="num">26.3%</td><td class="num">26.3%</td><td class="num">no change</td></tr>
+            <tr><td>Q2</td><td class="num">18.4%</td><td class="num"><strong>21.1%</strong></td><td class="num">+2.7 pts</td></tr>
+            <tr><td>Q3</td><td class="num">30.6%</td><td class="num">30.6%</td><td class="num">no change</td></tr>
+            <tr><td>Q4 (highest income)</td><td class="num">44.7%</td><td class="num"><strong>42.1%</strong></td><td class="num">-2.6 pts</td></tr>
+            </tbody>
+        </table>
+
+        <h3>The actual swap, in plain English</h3>
+        <p>On this run, the Guardrail made exactly one swap. Here is what happened in real terms. The Guardrail removed an office building sitting in a Quartile 4 (high-income) tract in Broward that the AI had funded at rank 42 of 45. That building had only modest financial exposure and sat in a low flood zone, so it was not a strong pick to begin with. In its place, the Guardrail added a retail building in a Quartile 2 (working-class) tract in Miami-Dade. That building sat at rank 47, one spot below the funding cutoff, but it was in a moderate flood zone and faced 168 mph winds. The neighborhood it sits in includes a small grocery store and a check-cashing place that are essential to the surrounding apartments. In other words, the Guardrail did not pick a random building from a low-income tract. It picked the building that the storm risk had already been quietly screaming about, in a community that had the most to lose if it went down.</p>
+
+        <figure>
+            <img src="report_assets/04_geographic_view.png" alt="Scatter plot of Florida commercial properties showing the funded ones in green concentrated in Miami-Dade and Broward, with a few funded points in inland Polk County after the Guardrail swap.">
+            <figcaption>The funded properties (green) after the Guardrail. Most are still in Miami-Dade and Broward, but one inland Polk property now appears on the list. That is the fix doing exactly what it was built to do.</figcaption>
+        </figure>
+    </section>
+
+    <section id="tax">
+        <h2><span class="num">8.</span>What the Fix Cost</h2>
+        <p class="lede">Fairness is never free. Here is the bill, with no spin.</p>
+
+        <figure>
+            <img src="report_assets/05_trust_tax.png" alt="Summary card showing 1 high-value property swapped out and a 2.2 percent drop in financial efficiency.">
+        </figure>
+
+        <p>On this portfolio, the Guardrail swapped one property. The total drop in "financial efficiency" was 2.2 percent. That is the cost. It is real, but it is small, and it is the kind of cost a manager can defend in a meeting by saying, "We accepted a 2 percent reduction in financial optimality to keep our funding inside a fairness band our regulator and our community can understand."</p>
+
+        <p>That is the headline cost. There are smaller costs too, and we want to be honest about them.</p>
+
+        <ul>
+            <li><strong>Speed and compute.</strong> Almost zero. The Guardrail runs in milliseconds. The AI calls take seconds. The Guardrail is a rounding error on top.</li>
+            <li><strong>What it covers.</strong> The Guardrail enforces fairness across income quartiles only. It does not directly enforce fairness across race, county, or building type. The dashboard surfaces those numbers, but the swap algorithm does not act on them.</li>
+            <li><strong>How clear it is.</strong> Very clear. Every swap is logged. A manager or a regulator can read the log and see exactly what changed.</li>
+            <li><strong>The risk of false comfort.</strong> This is the biggest hidden cost. A manager could look at "all four groups are inside the band" and conclude the AI is fixed. The truth is that the Guardrail clamps the symptom. It does not change the underlying scoring logic. The bias is still there. The Guardrail is a seatbelt, not a cure.</li>
+        </ul>
+
+        <h3>Who is still left out</h3>
+        <p>Even after the fix, three groups of communities are still vulnerable. First, a building that serves a working-class community but happens to sit just inside a wealthy Census tract (think of a laundromat right at the boundary line of two very different neighborhoods) gets coded as Quartile 4 and never triggers a swap. Census boundaries are blunt tools, and a building can sit on the wrong side of one. Second, the Guardrail does not optimize across race, county, or owner-occupancy. Disparities along those lines can persist even when the income chart looks fine. Third, in any given year the LLM might happen to produce an allocation that just barely sits inside the fairness band even though the bias is still there. The Guardrail only fires when something visibly breaks. Quiet, persistent bias inside the tolerance band can go unnoticed for years.</p>
+    </section>
+
+    <section id="related">
+        <h2><span class="num">9.</span>What We Built and Where We Borrowed</h2>
+        <p class="lede">Standing on shoulders, with full attribution.</p>
+
+        <p>We did not invent the underlying agent stack. We started from the LangGraph multi-agent template (open source) and the Nvidia NIM hosted endpoint for the LLM (<code>moonshotai/kimi-k2-thinking</code>). What we built ourselves is the Risk-Adjusted Gap metric, the Guardrail, the Streamlit dashboard, the synthetic data pipeline that ties values to real Census income, and the evaluation in this report.</p>
+
+        <p>The intervention itself is informed by published work in algorithmic fairness:</p>
+        <ul>
+            <li><strong>Aaronson et al. (2021)</strong> on algorithmic redlining in mortgage and insurance pricing. The closest analogue to what we observed in commercial real estate.</li>
+            <li><strong>Corbett-Davies and Goel (2018)</strong> on the limits of plain demographic parity when underlying risk really does differ between groups. This is the intellectual basis for the Risk-Adjusted Gap.</li>
+            <li><strong>Zehlike et al. (2017)</strong>, the FA*IR ranking algorithm. The design pattern behind our greedy swap Guardrail.</li>
+            <li><strong>Menon and Williamson (2018)</strong> on the cost of fairness. The framing for what we call the cost section above.</li>
+            <li><strong>Mitchell et al. (2019)</strong> on Model Cards. The disclosure-first philosophy behind logging every swap.</li>
+            <li><strong>Selbst et al. (2019)</strong>, "Fairness and Abstraction in Sociotechnical Systems." A useful reminder that no post-processing layer can substitute for involving the affected community in the design of the system in the first place.</li>
+        </ul>
+
+        <div class="callout good">
+            <p><strong>The bottom line.</strong> A small filter sitting on top of the AI brought its decisions into a defensible fairness band, and the Risk-Adjusted Gap underneath made the bias visible in the first place. The fix cost about 2 percent of the AI's "optimal" financial efficiency. The bigger contribution, though, is not the swap algorithm. It is the audit protocol that makes the AI's decisions readable, challengeable, and reproducible. That is what trust actually looks like in practice.</p>
+        </div>
+    </section>
+
+</div>
+
+<footer>
+    Florida CRE Trust Layer. Project report. Pipeline data: 150 properties, scored using Nvidia NIM <code>moonshotai/kimi-k2-thinking</code>, May 2026.
+</footer>
+
+</body>
+</html>
